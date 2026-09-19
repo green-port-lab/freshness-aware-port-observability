@@ -1,0 +1,14 @@
+parameter,value,mean_A,mean_C,gain,"gain, %","unobservable A, min","unobservable C, min",delay Z1 A,delay Z1 C
+admissible age scale,0.5,0.121,0.272,0.151,125,60,50,n/d,5
+admissible age scale,0.75,0.146,0.315,0.170,116,60,50,n/d,5
+admissible age scale,1.0,0.192,0.398,0.206,107,60,45,n/d,5
+admissible age scale,1.5,0.263,0.473,0.210,80,60,40,n/d,5
+admissible age scale,2.0,0.333,0.523,0.189,57,60,35,n/d,5
+kappa,0.3,0.167,0.236,0.069,42,60,50,n/d,65
+kappa,0.4,0.192,0.339,0.148,77,60,50,n/d,20
+kappa,0.5,0.192,0.398,0.206,107,60,45,n/d,5
+kappa,0.7,0.217,0.525,0.309,143,60,30,n/d,5
+kappa,0.9,0.308,0.534,0.225,73,60,30,n/d,5
+worker reliability,0.3,0.192,0.385,0.193,101,60,45,n/d,5
+worker reliability,0.5,0.192,0.398,0.206,107,60,45,n/d,5
+worker reliability,0.9,0.192,0.423,0.231,120,60,45,n/d,5

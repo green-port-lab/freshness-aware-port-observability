@@ -1,0 +1,4 @@
+configuration,static mean (60-115),proposed mean (60-115),mean overestimate,max pointwise overestimate,"at t, min",steps with overestimate,max on start-up transient
+A,0.192,0.192,0.000,0.000,60,0,0.500
+B,0.321,0.280,0.042,0.100,80,5,0.545
+C,0.482,0.398,0.084,0.215,100,8,0.620
