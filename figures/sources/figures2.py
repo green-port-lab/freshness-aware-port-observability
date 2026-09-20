@@ -29,7 +29,7 @@ groups = {}
 for r in rows:
     groups.setdefault(r["parameter"], []).append(r)
 titles = {"admissible age scale": "а) масштаб допустимого віку даних",
-          "kappa": "б) коефіцієнт погіршення каналу κ",
+          "kappa": "б) коефіцієнт погіршення умов зв’язку κ",
           "worker reliability": "в) достовірність спостережень працівника"}
 fig, axs = plt.subplots(1, 3, figsize=(10.5, 3.3))
 for ax, (key, title) in zip(axs, titles.items()):
@@ -60,17 +60,15 @@ ms = [num(r["median ms/step"]) for r in sc]
 ed = [int(r["mean directed edges"]) for r in sc]
 fig, ax = plt.subplots(figsize=(6.4, 3.6))
 ax.loglog(n, ms, marker="o", ms=6, lw=1.8, color=NAVY, label="час обчислення на крок")
-ax.axhline(300000, color="#c0392b", lw=1.4, ls="--")
-ax.text(26, 300000 * 1.35, "бюджет реального часу: крок 5 хв", fontsize=8.2, color="#c0392b")
 for x, y, e in zip(n, ms, ed):
     ax.annotate(f"{e} ребер", (x, y), textcoords="offset points", xytext=(0, 9), ha="center",
                 fontsize=7.4, color=GREY)
 ax.set_xlabel("кількість вузлів")
 ax.set_ylabel("час на крок, мс")
-ax.set_ylim(1.0, 3e6)
+ax.set_ylim(1.0, 3e3)
 ax.set_xlim(20, 380)
 ax.grid(alpha=.3, which="both", lw=.5)
-ax.legend(fontsize=8.4, frameon=False, loc="lower right")
+
 plt.tight_layout()
 plt.savefig(OUT + "/fig_scalability.png", dpi=300, bbox_inches="tight")
 plt.close()

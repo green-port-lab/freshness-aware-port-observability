@@ -22,7 +22,7 @@ STYLE = {
     "uav":     dict(m="P", c="#8e44ad", s=90),
     "worker":  dict(m="*", c="#d4a017", s=120),
 }
-LABEL = {"CC": "Центр керування", "relay": "Береговий шлюз", "sensor": "Датчик (буй)",
+LABEL = {"CC": "Центр керування", "relay": "Береговий шлюз LoRaWAN", "sensor": "Датчик (буй)",
          "tanker": "Танкер", "service": "Судно портового флоту", "uav": "БПЛА",
          "worker": "Працівник (рація + UWB)"}
 
@@ -54,7 +54,7 @@ def snapshot(ax, t, title):
         else:
             d = math.hypot(x2 - x1, y2 - y1) or 1
             ux, uy = (x2 - x1) / d, (y2 - y1) / d
-            ax.annotate("", xy=(x2 - ux * .07, y2 - uy * .07), xytext=(x1 + ux * .07, y1 + uy * .07),
+            ax.annotate("", xy=(x2 - ux * .025, y2 - uy * .025), xytext=(x1 + ux * .015, y1 + uy * .015),
                         arrowprops=dict(arrowstyle="-|>", color="#2a9d8f", lw=.8,
                                         linestyle="dotted", mutation_scale=8), zorder=2)
     for n in CONFIGS["C"]:
