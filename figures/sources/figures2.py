@@ -77,7 +77,7 @@ plt.close()
 ab = load("ablation.csv")
 methods = [("snapshot connectivity", "миттєва зв'язність\nзнімка"),
            ("static aggregated graph", "статичний\nагрегований граф"),
-           ("temporal reachability, no freshness", "темпоральна досяжність\nбез свіжості"),
+           ("temporal reachability, no freshness", "темпоральна досяжність\nбез віку та достовірності"),
            ("proposed (full)", "запропонований\nметод")]
 fig, ax = plt.subplots(figsize=(7.4, 3.6))
 width = 0.24
