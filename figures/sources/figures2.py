@@ -83,7 +83,7 @@ plt.close()
 ab = load("ablation.csv")
 methods = [("snapshot connectivity", "instantaneous\nreachability"),
            ("static aggregated graph", "time-aggregated\nstatic graph"),
-           ("temporal reachability, no freshness", "temporal reachability\nwithout age and reliability"),
+           ("temporal reachability, no freshness", "temporal reachability\nwithout age constraints\nor reliability weights"),
            ("proposed (full)", "proposed\napproach")]
 fig, ax = plt.subplots(figsize=(7.4, 3.6))
 width = 0.24

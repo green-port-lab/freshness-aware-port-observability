@@ -27,13 +27,13 @@ measurement is, and how reliable its source was. From this it derives:
 
 * **Δ-observability** of a zone — the age of the freshest delivered measurement does not
   exceed the maximum allowable data age set for that zone;
-* **the observability score O(t)** — the risk-weighted share of zones observed in time and
-  with sufficient source reliability;
+* **the observability score O(t)** — the risk-weighted average, over zones, of the highest
+  source reliability among delivered measurements that satisfy the data-age constraint;
 * **node criticality χ(v)** — the drop in the mean score when a node is removed.
 
 Three baseline methods are implemented for comparison: instantaneous reachability, a
-time-aggregated static graph, and temporal reachability without age and reliability
-weighting.
+time-aggregated static graph, and temporal reachability without age constraints or
+reliability weights.
 
 ## Selected results
 
