@@ -22,9 +22,9 @@ STYLE = {
     "uav":     dict(m="P", c="#8e44ad", s=90),
     "worker":  dict(m="*", c="#d4a017", s=120),
 }
-LABEL = {"CC": "Центр керування", "relay": "Береговий шлюз LoRaWAN", "sensor": "Датчик (буй)",
-         "tanker": "Танкер", "service": "Судно портового флоту", "uav": "БПЛА",
-         "worker": "Працівник (рація + UWB)"}
+LABEL = {"CC": "Control center", "relay": "Shore-based LoRaWAN gateway", "sensor": "Sensor (buoy)",
+         "tanker": "Tanker", "service": "Port service vessel", "uav": "UAV",
+         "worker": "Port worker (radio + UWB)"}
 
 def snapshot(ax, t, title):
     # зони
@@ -35,9 +35,9 @@ def snapshot(ax, t, title):
             ax.add_patch(Rectangle((x0, y0), .5, .5, fc="none", ec="#c0392b", hatch="////", lw=0, alpha=.45))
         ax.text(x0 + .04, y1 - .07, f"Z{k}", fontsize=7, color="#4a5b6e")
     ax.add_patch(Rectangle((-.1, -.55), 2.2, .55, fc="#efe9df", ec="none"))   # берег
-    ax.text(.3, -.5, "берегова зона", fontsize=7, color="#7a6a55", ha="center")
+    ax.text(.3, -.5, "shore", fontsize=7, color="#7a6a55", ha="center")
     ax.add_patch(Rectangle((.8, -.52), .25, .14, fc="none", ec="#7a6a55", lw=.7, ls=":"))
-    ax.text(.925, -.34, "пункт збору", fontsize=6, color="#7a6a55", ha="center")
+    ax.text(.925, -.34, "assembly point", fontsize=6, color="#7a6a55", ha="center")
     act = [n for n in CONFIGS["C"] if active(n, t)]
     E = edges_at(t, act)
     drawn = set()
@@ -81,40 +81,40 @@ def snapshot(ax, t, title):
         s.set_color("#bbb")
 
 fig, axs = plt.subplots(1, 3, figsize=(10.5, 4.0))
-snapshot(axs[0], 30, "а) t = 30 хв: звичайний режим")
-snapshot(axs[1], 75, "б) t = 75 хв: після аварії, κ(t) = 0,5")
-snapshot(axs[2], 105, "в) t = 105 хв: V2 і БПЛА в зоні терміналу")
+snapshot(axs[0], 30, "(a) t = 30 min, normal operation")
+snapshot(axs[1], 75, "(b) t = 75 min, after the accident, κ(t) = 0.5")
+snapshot(axs[2], 105, "(c) t = 105 min, V2 and UAV at the terminal")
 handles = [Line2D([], [], marker=STYLE[k]["m"], color="w", markerfacecolor=STYLE[k]["c"],
                   markersize=8 if k != "worker" else 11, label=LABEL[k]) for k in STYLE]
-handles += [Line2D([], [], marker="x", color="#c0392b", lw=0, markersize=7, label="Вузол вийшов з ладу"),
-            Line2D([], [], color="#8aa1b8", ls="--", label="Симетричний канал"),
-            Line2D([], [], color="#2a9d8f", ls=":", label="Uplink LoRaWAN"),
-            Line2D([], [], color="#555", lw=1.4, label="Дротовий канал"),
-            Rectangle((0, 0), 1, 1, fc="none", ec="#c0392b", hatch="////", alpha=.5, label="Забруднена зона")]
+handles += [Line2D([], [], marker="x", color="#c0392b", lw=0, markersize=7, label="Failed node"),
+            Line2D([], [], color="#8aa1b8", ls="--", label="Symmetric link"),
+            Line2D([], [], color="#2a9d8f", ls=":", label="LoRaWAN uplink"),
+            Line2D([], [], color="#555", lw=1.4, label="Wired link"),
+            Rectangle((0, 0), 1, 1, fc="none", ec="#c0392b", hatch="////", alpha=.5, label="Polluted zone")]
 fig.legend(handles=handles, loc="lower center", ncol=6, fontsize=7.2, frameon=False, bbox_to_anchor=(.5, -.02))
 plt.tight_layout(rect=(0, .1, 1, 1))
-plt.savefig(OUT + "/fig2_snapshots.png", dpi=300, bbox_inches="tight")
+plt.savefig(OUT + "/fig2_snapshots.png", dpi=600, bbox_inches="tight")
 
 # ---- Рис. 3: O(t) ----
 fig, ax = plt.subplots(figsize=(7.2, 3.3))
 ax.axvspan(60, 120, color="#f3d9d4", alpha=.6, lw=0)
 ax.axvline(60, color="#c0392b", lw=1)
-ax.text(62, .93, "аварія; погіршення зв’язку (κ = 0,5)", fontsize=7.5, color="#a93226")
+ax.text(62, .93, "accident, link degradation (κ = 0.5)", fontsize=7.5, color="#a93226")
 cols = {"A": "#2a9d8f", "B": "#3b6fb6", "C": "#e76f51"}
-names = {"A": "A: лише стаціонарна інфраструктура", "B": "B: A + судна", "C": "C: B + працівники + БПЛА"}
+names = {"A": "A: fixed nodes only", "B": "B: A + vessels", "C": "C: B + workers + UAV"}
 for cfg in "ABC":
     O = run(cfg)[0]
     ax.step(TIMES, [O[t] for t in TIMES], where="post", color=cols[cfg], lw=1.6, label=names[cfg])
 Os = run_static("C")
 ax.step(TIMES, [Os[t] for t in TIMES], where="post", color=cols["C"], lw=1.1, ls=":",
-        label="C, оцінка за статичним агрегованим графом")
+        label="C, time-aggregated static graph")
 ax.set_xlim(0, 180); ax.set_ylim(0, 1)
 from matplotlib.ticker import FuncFormatter
-ax.yaxis.set_major_formatter(FuncFormatter(lambda v, p: f"{v:.1f}".replace(".", ",")))
-ax.set_xlabel("Час t, хв"); ax.set_ylabel("Показник спостережуваності O(t)")
+ax.yaxis.set_major_formatter(FuncFormatter(lambda v, p: f"{v:.1f}"))
+ax.set_xlabel("Time t, min"); ax.set_ylabel("Observability score O(t)")
 ax.grid(alpha=.3, lw=.5)
 ax.legend(fontsize=7.3, loc="upper left", bbox_to_anchor=(0, .88), frameon=False)
 plt.tight_layout()
-plt.savefig(OUT + "/fig3_index.png", dpi=300)
+plt.savefig(OUT + "/fig3_index.png", dpi=600)
 print("ok")
 

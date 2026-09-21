@@ -28,10 +28,10 @@ def arrow(x1, y1, x2, y2, color="#4a5b6e", style="-|>", lw=1.2, ls="-"):
                                  color=color, lw=lw, ls=ls))
 
 # --- Учасники ---
-ax.text(50, 98.5, "Учасники порту як вершини темпорального графа $\\mathcal{G}$", ha="center", va="top",
+ax.text(50, 98.5, "Port nodes as vertices of the temporal graph $\\mathcal{G}$", ha="center", va="top",
         fontsize=10.5, weight="bold", color=NAVY)
-parts = ["Датчики\nводного\nсередовища", "Судна\n(AIS, радіо,\nсенсори)", "Берегові\nшлюзи LoRaWAN\nі станції",
-         "БПЛА", "Працівники\n(рація,\nUWB-бейдж)", "Центр\nкерування"]
+parts = ["Water-quality\nsensors", "Vessels\n(AIS, radio,\nsensors)", "Shore-based\nLoRaWAN\ngateways",
+         "UAV", "Port workers\n(radio,\nUWB badge)", "Control\ncenter"]
 pw, gap = 14.2, 1.6
 x0 = (100 - (6 * pw + 5 * gap)) / 2
 for i, p in enumerate(parts):
@@ -39,20 +39,20 @@ for i, p in enumerate(parts):
 
 # --- Два контури ---
 box(2, 45, 45, 32, "", ec=TEAL)
-ax.text(24.5, 76, "Контур об’єкта спостереження", ha="center", va="top", fontsize=10, weight="bold", color=TEAL)
-ax.text(24.5, 72.6, "стан акваторії X(t)", ha="center", va="top", fontsize=8.5, style="italic", color="#333")
-box(5, 58, 39, 10.5, "Фізико-хімічний рівень $X_{\\mathrm{ф}}$",
-    "температура, pH, солоність, каламутність,\nрозчинений кисень, забруднювачі", ec=TEAL, fc="white", tsize=8.8, bsize=7.6)
-box(5, 47, 39, 9.5, "Просторово-динамічний рівень $X_{\\mathrm{п}}$",
-    "зони $z_k$, перенос між зонами,\nпоширення плями", ec=TEAL, fc="white", tsize=8.8, bsize=7.6)
+ax.text(24.5, 76, "Monitored environment", ha="center", va="top", fontsize=10, weight="bold", color=TEAL)
+ax.text(24.5, 72.6, "state of the port waters X(t)", ha="center", va="top", fontsize=8.5, style="italic", color="#333")
+box(5, 58, 39, 10.5, "Physicochemical level $X_{\\mathrm{ph}}$",
+    "temperature, pH, salinity, turbidity,\ndissolved oxygen, pollutants", ec=TEAL, fc="white", tsize=8.8, bsize=7.6)
+box(5, 47, 39, 9.5, "Spatial-dynamic level $X_{\\mathrm{sp}}$",
+    "zones $z_k$, transport between zones,\nslick spread", ec=TEAL, fc="white", tsize=8.8, bsize=7.6)
 
 box(53, 45, 45, 32, "", ec=ORANGE)
-ax.text(75.5, 76, "Контур системи спостереження", ha="center", va="top", fontsize=10, weight="bold", color=ORANGE)
-ax.text(75.5, 72.6, "мережа $\\mathcal{G}$(t) та якість даних I(t)", ha="center", va="top", fontsize=8.5, style="italic", color="#333")
-box(56, 58, 39, 10.5, "Мережево-операційний рівень",
-    "темпоральний граф учасників, стан вузлів\nі каналів, готовність засобів реагування", ec=ORANGE, fc="white", tsize=8.8, bsize=7.6)
-box(56, 47, 39, 9.5, "Інформаційний рівень",
-    "вік даних $\\Delta_k(t)$, достовірність q,\nузгодженість джерел", ec=ORANGE, fc="white", tsize=8.8, bsize=7.6)
+ax.text(75.5, 76, "Monitoring system", ha="center", va="top", fontsize=10, weight="bold", color=ORANGE)
+ax.text(75.5, 72.6, "network $\\mathcal{G}$(t) and data quality I(t)", ha="center", va="top", fontsize=8.5, style="italic", color="#333")
+box(56, 58, 39, 10.5, "Network-operational level",
+    "temporal graph of nodes, state of nodes\nand links, readiness of response assets", ec=ORANGE, fc="white", tsize=8.8, bsize=7.6)
+box(56, 47, 39, 9.5, "Informational level",
+    "data age $\\Delta_k(t)$, reliability q,\nsource consistency", ec=ORANGE, fc="white", tsize=8.8, bsize=7.6)
 
 # стрілки від учасників
 for i in range(6):
@@ -63,27 +63,27 @@ arrow(24.5, 80.8, 24.5, 77.6); arrow(75.5, 80.8, 75.5, 77.6)
 # відношення спостереження між контурами
 arrow(53, 63, 47, 63, color=NAVY, style="<|-|>")
 ax.text(50, 65.2, r"$\sigma(v, z, t)$", ha="center", fontsize=8.3, color=NAVY, style="italic")
-ax.text(50, 60.2, "відношення\nспостереження", ha="center", va="top", fontsize=7, color="#555")
+ax.text(50, 60.2, "sensing\nrelation", ha="center", va="top", fontsize=7, color="#555")
 
 # --- Критерій ---
 arrow(24.5, 44.3, 40, 40.2); arrow(75.5, 44.3, 60, 40.2)
-box(14, 30.5, 72, 9, "Критерій і показник спостережуваності",
-    "Δ-спостережуваність за часово-узгодженими шляхами в $\\mathcal{G}$  ·  O(t)  ·  критичність вузлів",
+box(14, 30.5, 72, 9, "Observability criterion and score",
+    "Δ-observability via time-respecting paths in $\\mathcal{G}$  ·  O(t)  ·  node criticality",
     ec=NAVY, fc="#e8eef8", tsize=9.5, bsize=8)
 arrow(50, 29.8, 50, 26.6)
 
-# --- Практичні результати ---
+# --- Practical outcomes ---
 box(3, 13.5, 94, 12.5, "", ec=BLUE, fc="white", dashed=True)
-ax.text(50, 25.4, "Практичні результати", ha="center", va="top", fontsize=9.5, weight="bold", color=BLUE)
-res = ["Виявлення\nзабруднення", "Оцінювання\nризику", "Прогнозування\nпоширення", "Резервування\nмережі", "Підтримка\nрішень"]
+ax.text(50, 25.4, "Practical outcomes", ha="center", va="top", fontsize=9.5, weight="bold", color=BLUE)
+res = ["Pollution\ndetection", "Risk\nassessment", "Spread\nforecasting", "Network\nredundancy", "Decision\nsupport"]
 rw = 16.6
 for i, r in enumerate(res):
     box(5.5 + i * (rw + 1.8), 15, rw, 6.3, r, tsize=7.8, fc="#f4f7fc")
 arrow(50, 12.8, 50, 10.2)
 
-box(10, 1.5, 80, 8, "Концепція «зеленого порту»",
-    "екологічна результативність  |  моніторинг  |  аварійне реагування  |  сталий розвиток",
+box(10, 1.5, 80, 8, "Green port concept",
+    "environmental performance  |  monitoring  |  emergency response  |  sustainability",
     ec=GREEN, fc="#eef6ee", tsize=9.5, bsize=7.8, tcolor=GREEN)
 
-plt.savefig(OUT + "/fig1_scheme.png", dpi=300, bbox_inches="tight")
+plt.savefig(OUT + "/fig1_scheme.png", dpi=600, bbox_inches="tight")
 print("ok")

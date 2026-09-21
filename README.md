@@ -59,7 +59,7 @@ model/            the model and the computational experiments
   model2.py         directed links, latency, earliest arrival, index, criticality
   experiments.py    regenerates every published table and check
   counterexample.py stationary network where the static graph overstates the index
-figures/          generated figures, 300 dpi
+figures/          generated figures, 600 dpi
   sources/          scripts that build them
 results/          generated CSV files behind the published tables
 ```
@@ -94,6 +94,9 @@ The model is fully deterministic: no random number generation, no external data,
 wall-clock dependence. The only random component is the generator of the synthetic
 networks used in the scalability test, and it uses a fixed seed of zero. Any run on any
 machine yields identical values; only the timings differ.
+The file `results/scalability.csv` holds the timings reported in Table 10 of the paper;
+re-running `model/experiments.py` overwrites it with timings from your own machine, which
+will differ, while all edge counts and every other result stay identical.
 
 ### Control run
 
