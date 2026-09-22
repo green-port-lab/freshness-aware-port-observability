@@ -14,7 +14,7 @@ worker reliability q,0.4,0.192,0.280,0.391,0.200,yes
 worker reliability q,0.5,0.192,0.280,0.398,0.206,yes
 worker reliability q,0.7,0.192,0.280,0.410,0.218,yes
 worker reliability q,0.9,0.192,0.280,0.423,0.231,yes
-"time step, min",1,0.202,0.296,0.437,0.235,yes
-"time step, min",2,0.202,0.301,0.435,0.234,yes
+"time step, min",1,0.192,0.280,0.413,0.221,yes
+"time step, min",2,0.192,0.285,0.415,0.223,yes
 "time step, min",5,0.192,0.280,0.398,0.206,yes
 "time step, min",10,0.192,0.288,0.379,0.188,yes

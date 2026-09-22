@@ -84,10 +84,12 @@ python figures/sources/figs.py      # graph snapshots and score dynamics
 python figures/sources/figures2.py  # ablation, sensitivity, scalability, criticality
 ```
 
-`experiments.py` writes ten CSV files to `results/`: ablation of the baseline methods,
+`experiments.py` writes eleven CSV files to `results/`: ablation of the baseline methods,
 separation of the freshness and reliability contributions, the static-graph gap, the
 factorial failure analysis, two sensitivity studies, the control run, the buffer-size
-statistics, the spatial-quantization check and the scalability test.
+statistics, the spatial-quantization check, the robustness of the headline results to
+the time step (Appendix B of the paper, base step 5 min versus 1 min), and the
+scalability test.
 
 ### Determinism
 

@@ -24,6 +24,16 @@ CFGS = ["A", "B", "C"]
 SP = spill_times()
 CRISIS = (60, 115)
 
+
+def crisis_mean(O):
+    """Середнє за аварійний інтервал [60, 120), коректне для будь-якого кроку.
+
+    CRISIS = (60, 115) описує той самий інтервал лише при кроці 5 хв, де момент 115
+    представляє проміжок [115, 120). Для інших кроків треба брати всі моменти з [60, 120).
+    """
+    v = [O[t] for t in O if CRISIS[0] <= t < CRISIS[1] + 5]
+    return sum(v) / len(v)
+
 def r(x, n=3):
     return str(Decimal(repr(round(x, 9))).quantize(Decimal(1).scaleb(-n), ROUND_HALF_UP))
 
@@ -113,7 +123,7 @@ def sensitivity():
         record("worker reliability q", q)
     for dt in (1, 2, 5, 10):
         reset(); PARAMS["dt"] = dt
-        vals = {c: mean(run(c, dt=dt)[0], *CRISIS) for c in CFGS}
+        vals = {c: crisis_mean(run(c, dt=dt)[0]) for c in CFGS}
         order = "yes" if vals["A"] <= vals["B"] <= vals["C"] else "NO"
         rows.append(["time step, min", dt, r(vals["A"]), r(vals["B"]), r(vals["C"]),
                      r(vals["C"] - vals["A"]), order])
@@ -363,6 +373,48 @@ def buffer_size():
     return maxP, maxD
 
 
+# ---------------- 11. Robustness of the headline results to the time step ----------------
+def robustness_time_step():
+    """Головні показники при базовому кроці 5 хв і при кроці 1 хв (Appendix B)."""
+    def avg(O, a, b):
+        v = [O[t] for t in O if a <= t < b]
+        return sum(v) / len(v)
+    out = {}
+    for dt in (5, 1):
+        reset()
+        O = {c: run(c, spill=SP, dt=dt) for c in CFGS}
+        S = {c: run_static(c, dt=dt) for c in ("B", "C")}
+        d = {}
+        for c in CFGS:
+            Oc = O[c][0]
+            d[f"mean score, normal operation [5,60), {c}"] = avg(Oc, 5, 60)
+            d[f"mean score, accident interval [60,120), {c}"] = avg(Oc, 60, 120)
+            d[f"mean score, after recovery [120,180], {c}"] = avg(Oc, 120, 181)
+        for c in ("B", "C"):
+            g = {t: S[c][t] - O[c][0][t] for t in S[c]}
+            d[f"static graph, max discrepancy over [60,120), {c}"] = max(v for t, v in g.items() if 60 <= t < 120)
+            d[f"static graph, mean discrepancy over [60,120), {c}"] = avg(g, 60, 120)
+        for c in CFGS:
+            vals = {}
+            for jam, des in ((False, False), (False, True), (True, False), (True, True)):
+                reset(); FLAGS.update(jam=jam, destroy=des)
+                vals[(jam, des)] = avg(run(c, spill=SP, dt=dt)[0], 60, 120)
+            base = vals[(False, False)]
+            d[f"factorial interaction, {c}"] = (base - vals[(True, True)]) - (base - vals[(False, True)]) - (base - vals[(True, False)])
+        reset()
+        for c in CFGS:
+            fs = O[c][2]
+            for k in (1, 2, 5):
+                d[f"detection delay Z{k}, min, {c}"] = (fs[k] - SP[k]) if k in fs else None
+        out[dt] = d
+    rows = []
+    for key in out[5]:
+        f = lambda v: "n.d." if v is None else (v if isinstance(v, int) else r(v))
+        rows.append([key, f(out[5][key]), f(out[1][key])])
+    write("robustness_time_step.csv", ["indicator", "time step 5 min", "time step 1 min"], rows)
+    return rows
+
+
 if __name__ == "__main__":
     print("=== 1. ablation (Table 5) ==="); [print("  ", x) for x in ablation()]
     print("=== 2. components (Table 6) ==="); [print("  ", x) for x in components()]
@@ -373,4 +425,5 @@ if __name__ == "__main__":
     print("=== 6. control run (Table 9) ==="); [print("  ", x) for x in control_run()]
     print("=== 7. buffer size (Section 3.8) ==="); print("  P, D =", buffer_size())
     print("=== 8. quantization (Section 6.3) ==="); [print("  ", x) for x in quantization()]
-    print("=== 9. scalability (Table 10) ==="); scalability()
+    print("=== 9. robustness to the time step (Appendix B) ==="); [print("  ", x) for x in robustness_time_step()]
+    print("=== 10. scalability (Table 10) ==="); scalability()
