@@ -1,0 +1,26 @@
+indicator,time step 5 min,time step 1 min
+"mean score, normal operation [5,60), A",0.500,0.500
+"mean score, accident interval [60,120), A",0.192,0.192
+"mean score, after recovery [120,180], A",0.327,0.340
+"mean score, normal operation [5,60), B",0.545,0.545
+"mean score, accident interval [60,120), B",0.280,0.280
+"mean score, after recovery [120,180], B",0.452,0.475
+"mean score, normal operation [5,60), C",0.620,0.620
+"mean score, accident interval [60,120), C",0.398,0.413
+"mean score, after recovery [120,180], C",0.613,0.654
+"static graph, max discrepancy over [60,120), B",0.100,0.200
+"static graph, mean discrepancy over [60,120), B",0.042,0.034
+"static graph, max discrepancy over [60,120), C",0.215,0.280
+"static graph, mean discrepancy over [60,120), C",0.084,0.042
+"factorial interaction, A",0.000,0.000
+"factorial interaction, B",0.109,0.133
+"factorial interaction, C",0.082,0.101
+"detection delay Z1, min, A",n.d.,n.d.
+"detection delay Z2, min, A",n.d.,n.d.
+"detection delay Z5, min, A",n.d.,n.d.
+"detection delay Z1, min, B",65,61
+"detection delay Z2, min, B",n.d.,n.d.
+"detection delay Z5, min, B",n.d.,n.d.
+"detection delay Z1, min, C",5,1
+"detection delay Z2, min, C",25,21
+"detection delay Z5, min, C",50,46
