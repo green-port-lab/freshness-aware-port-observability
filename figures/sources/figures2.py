@@ -30,7 +30,7 @@ for r in rows:
     groups.setdefault(r["parameter"], []).append(r)
 titles = {"admissible age scale": "(a) scale of the maximum allowable data age",
           "kappa": "(b) communication range scaling factor κ",
-          "worker reliability": "(c) reliability of worker observations"}
+          "worker reliability": "(c) credibility of worker observations"}
 fig, axs = plt.subplots(1, 3, figsize=(10.5, 3.3))
 for ax, (key, title) in zip(axs, titles.items()):
     g = groups[key]
@@ -83,7 +83,7 @@ plt.close()
 ab = load("ablation.csv")
 methods = [("snapshot connectivity", "instantaneous\nreachability"),
            ("static aggregated graph", "time-aggregated\nstatic graph"),
-           ("temporal reachability, no freshness", "temporal reachability\nwithout age constraints\nor reliability weights"),
+           ("temporal reachability, no freshness", "temporal reachability\nwithout age constraints\nor credibility weights"),
            ("proposed (full)", "proposed\napproach")]
 fig, ax = plt.subplots(figsize=(7.4, 3.6))
 width = 0.24

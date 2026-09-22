@@ -23,17 +23,17 @@ disable sensors, gateways or communication links.
 The observing infrastructure is represented as a **directed temporal graph with non-zero
 link latency**. For every zone and every time step the model determines whether a
 measurement has reached the control center along a **time-respecting path**, how old that
-measurement is, and how reliable its source was. From this it derives:
+measurement is, and how credible its source was. From this it derives:
 
 * **Δ-observability** of a zone — the age of the freshest delivered measurement does not
   exceed the maximum allowable data age set for that zone;
 * **the observability score O(t)** — the risk-weighted average, over zones, of the highest
-  source reliability among delivered measurements that satisfy the data-age constraint;
+  source credibility among delivered measurements that satisfy the data-age constraint;
 * **node criticality χ(v)** — the drop in the mean score when a node is removed.
 
 Three baseline methods are implemented for comparison: instantaneous reachability, a
 time-aggregated static graph, and temporal reachability without age constraints or
-reliability weights.
+credibility weights.
 
 ## Selected results
 
@@ -85,7 +85,7 @@ python figures/sources/figures2.py  # ablation, sensitivity, scalability, critic
 ```
 
 `experiments.py` writes eleven CSV files to `results/`: ablation of the baseline methods,
-separation of the freshness and reliability contributions, the static-graph gap, the
+separation of the freshness and credibility contributions, the static-graph gap, the
 factorial failure analysis, two sensitivity studies, the control run, the buffer-size
 statistics, the spatial-quantization check, the robustness of the headline results to
 the time step (Appendix B of the paper, base step 5 min versus 1 min), and the

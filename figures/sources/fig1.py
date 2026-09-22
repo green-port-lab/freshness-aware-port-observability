@@ -52,7 +52,7 @@ ax.text(75.5, 72.6, "network $\\mathcal{G}$(t) and data quality I(t)", ha="cente
 box(56, 58, 39, 10.5, "Network-operational level",
     "temporal graph of nodes, state of nodes\nand links, readiness of response assets", ec=ORANGE, fc="white", tsize=8.8, bsize=7.6)
 box(56, 47, 39, 9.5, "Informational level",
-    "data age $\\Delta_k(t)$, reliability q,\nsource consistency", ec=ORANGE, fc="white", tsize=8.8, bsize=7.6)
+    "data age $\\Delta_k(t)$, credibility q,\nsource consistency", ec=ORANGE, fc="white", tsize=8.8, bsize=7.6)
 
 # стрілки від учасників
 for i in range(6):
