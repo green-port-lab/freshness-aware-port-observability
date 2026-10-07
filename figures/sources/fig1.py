@@ -43,8 +43,8 @@ ax.text(24.5, 76, "Monitored environment", ha="center", va="top", fontsize=10, w
 ax.text(24.5, 72.6, "state of the port waters X(t)", ha="center", va="top", fontsize=8.5, style="italic", color="#333")
 box(5, 58, 39, 10.5, "Physicochemical level $X_{\\mathrm{ph}}$",
     "temperature, pH, salinity, turbidity,\ndissolved oxygen, pollutants", ec=TEAL, fc="white", tsize=8.8, bsize=7.6)
-box(5, 47, 39, 9.5, "Spatial-dynamic level $X_{\\mathrm{sp}}$",
-    "zones $z_k$, transport between zones,\nslick spread", ec=TEAL, fc="white", tsize=8.8, bsize=7.6)
+box(5, 47, 39, 9.5, "Spatial transport level $X_{\\mathrm{sp}}$",
+    "zones $z_k$, transport between zones,\nslick spreading", ec=TEAL, fc="white", tsize=8.8, bsize=7.6)
 
 box(53, 45, 45, 32, "", ec=ORANGE)
 ax.text(75.5, 76, "Monitoring system", ha="center", va="top", fontsize=10, weight="bold", color=ORANGE)
