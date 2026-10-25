@@ -1,16 +1,15 @@
 """
-Freshness-aware temporal-graph observability model of a port water area (v2).
+Freshness-aware temporal-graph observability model of a port water area.
 
-Changes with respect to v1:
-  * communication links are DIRECTED: LoRaWAN end devices are uplink-only,
+  * communication links are directed: LoRaWAN end devices are uplink-only,
     radio and wired links are bidirectional;
-  * link latency zeta is NON-ZERO and channel-specific;
+  * link latency zeta is nonzero and channel-specific;
   * data propagation inside a snapshot is an earliest-arrival (Dijkstra)
-    computation bounded by the step DT, instead of connected components;
-  * store-carry-forward between snapshots is unchanged.
+    computation bounded by the step DT;
+  * measurements are stored, carried, and forwarded between snapshots.
 
 Standard library only. Python 3.9+.
-Usage:  python model2.py
+Usage:  python observability.py
 """
 import heapq
 import itertools

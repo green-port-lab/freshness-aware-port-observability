@@ -7,8 +7,8 @@ from matplotlib.patches import Rectangle
 from matplotlib.lines import Line2D
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "model"))
-import model2 as model
-from model2 import *
+import observability as model
+from observability import *
 
 plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9})
 SP = spill_times()
@@ -113,6 +113,6 @@ ax.set_xlabel("Time t, min"); ax.set_ylabel("Observability score O(t)")
 ax.grid(alpha=.3, lw=.5)
 ax.legend(fontsize=7.3, loc="upper left", bbox_to_anchor=(0, .88), frameon=False)
 plt.tight_layout()
-plt.savefig(OUT + "/fig3_index.png", dpi=600)
+plt.savefig(OUT + "/fig3_score.png", dpi=600)
 print("ok")
 

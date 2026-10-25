@@ -102,8 +102,8 @@ plt.tight_layout()
 plt.savefig(OUT + "/fig_ablation.png", dpi=600, bbox_inches="tight")
 plt.close()
 
-import model2 as M
-from model2 import CONFIGS, mean, run
+import observability as M
+from observability import CONFIGS, mean, run
 base = mean(run("C")[0])
 crit = sorted(((n_, base - mean(run("C", removed=(n_,))[0])) for n_ in CONFIGS["C"] if n_ != "CC"),
               key=lambda x: x[1])

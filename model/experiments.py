@@ -14,8 +14,8 @@ import csv, math, os, random, statistics, sys, time
 from decimal import Decimal, ROUND_HALF_UP
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import model2 as M
-from model2 import (CONFIGS, DMAX, PARAMS, FLAGS, TIMES, T_END, W, ZONES,
+import observability as M
+from observability import (CONFIGS, DMAX, PARAMS, FLAGS, TIMES, T_END, W, ZONES,
                     mean, run, run_static, run_snapshot, run_nofreshness, spill_times)
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results")
@@ -193,7 +193,7 @@ def scalability():
 
 
 def components():
-    from model2 import DMAX, ZONES, W, TYPES, NODES, active, edges_at, sensing_at, propagate, _add, _best, _prune
+    from observability import DMAX, ZONES, W, TYPES, NODES, active, edges_at, sensing_at, propagate, _add, _best, _prune
 
     def variant(cfg, use_age=True, use_q=True, dt=5):
         times = list(range(0, M.T_END + 1, dt))
@@ -332,7 +332,7 @@ def quantization():
 
 
 def buffer_size():
-    from model2 import active, edges_at, sensing_at, propagate, _add, _prune, NODES
+    from observability import active, edges_at, sensing_at, propagate, _add, _prune, NODES
     reset()
     maxP = maxD = 0
     store = {n: {} for n in CONFIGS["C"]}

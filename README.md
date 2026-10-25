@@ -3,8 +3,8 @@
 Model, experiments and figures for a temporal-graph approach to the observability of a
 port water area that accounts for the freshness of data at the decision point.
 
-**Related manuscript.** *Freshness-aware temporal-graph observability for resilient
-environmental monitoring in smart and green ports* (in preparation). A link to the
+**Related manuscript.** *Freshness-Aware Temporal-Graph Observability for Resilient
+Environmental Monitoring in Smart and Green Ports* (in preparation). A link to the
 published version will be added here once available.
 
 ---
@@ -25,11 +25,11 @@ link latency**. For every zone and every time step the model determines whether 
 measurement has reached the control center along a **time-respecting path**, how old that
 measurement is, and how credible its source was. From this it derives:
 
-* **Δ-observability** of a zone — the age of the freshest delivered measurement does not
-  exceed the maximum allowable data age set for that zone;
-* **the observability score O(t)** — the risk-weighted average, over zones, of the highest
-  source credibility among delivered measurements that satisfy the data-age constraint;
-* **node criticality χ(v)** — the drop in the mean score when a node is removed.
+* **Δ-observability** of a zone means that the age of the freshest delivered measurement
+  does not exceed the maximum allowable data age set for that zone.
+* **The observability score O(t)** is the risk-weighted average, over zones, of the highest
+  source credibility among delivered measurements that satisfy the data-age constraint.
+* **Node criticality χ(v)** is the drop in the mean score when a node is removed.
 
 Three baseline methods are implemented for comparison: instantaneous reachability, a
 time-aggregated static graph, and temporal reachability without age constraints or
@@ -37,8 +37,11 @@ credibility weights.
 
 ## Selected results
 
-Configurations: **A** — fixed infrastructure only; **B** — A plus vessels; **C** — all
-participants, including workers and the unmanned aerial vehicle.
+Three configurations of participants are compared.
+
+* **A** contains the fixed infrastructure only.
+* **B** adds the vessels to A.
+* **C** contains all participants, including workers and the unmanned aerial vehicle.
 
 | Result | Value |
 |---|---|
@@ -47,17 +50,17 @@ participants, including workers and the unmanned aerial vehicle.
 | Overestimate by the time-aggregated static graph | 0.084 on average, up to 0.215 at 100 min |
 | Overestimate when data freshness is ignored | 0.238 |
 | Interaction of node failures and link degradation | 0.109 (B), 0.082 (C), exactly zero for A |
-| Runtime per step for a 250-node network | 1119 ms, i.e. 0.37% of the 5-min time step |
+| Runtime per step for a 250-node network | 1119 ms (0.37% of the 5-min time step) |
 
-The time-aggregated static graph overstates observability because of **observer islands**:
-groups of participants holding fresh measurements that have no time-respecting path to
+The time-aggregated static graph overstates observability because of **observer islands**,
+which are groups of participants holding fresh measurements that have no time-respecting path to
 the control center.
 
 ## Repository layout
 
 ```
 model/            the model and the computational experiments
-  model2.py         directed links, latency, earliest arrival, score, criticality
+  observability.py  directed links, latency, earliest arrival, score, criticality
   experiments.py    regenerates every published table and check
   counterexample.py stationary network where the static graph overstates the score
 figures/          generated figures, 600 dpi
@@ -67,15 +70,15 @@ results/          generated CSV files behind the published tables
 
 ## Requirements
 
-* Python 3.9 or newer — the model itself uses the **standard library only**
-* Matplotlib (figures only): `pip install matplotlib`
+* Python 3.9 or newer. The model itself uses the **standard library only**.
+* Matplotlib, needed for the figures only (`pip install matplotlib`).
 
 No configuration, no external data files.
 
 ## Reproducing the results
 
 ```bash
-python model/model2.py           # main results, detection delays, criticality
+python model/observability.py    # main results, detection delays, criticality
 python model/experiments.py      # all result tables and the buffer-size check
 python model/counterexample.py   # stationary network counterexample
 
@@ -105,10 +108,10 @@ will differ, while all edge counts and every other result stay identical.
 
 The control run disables the node failures (gateway R1 and buoy S1) and the link
 degradation, while keeping the spill, its spread and the worker evacuation, which are
-defined by routes rather than by flags:
+defined by routes and not by flags. Run the following from the `model/` directory.
 
 ```python
-from model2 import FLAGS
+from observability import FLAGS
 FLAGS.update(jam=False, destroy=False)
 ```
 
@@ -119,8 +122,8 @@ against 60, 60 and 45 min in the main scenario.
 ### Measured buffer statistics
 
 Maximum size of the pair set for one buffer key: **P = 3**. Maximum number of distinct
-departure times per vertex: **D = 6**. Both are taken over all operations of a step, not
-only after buffer compaction.
+departure times per vertex: **D = 6**. Both are taken over all operations of a step,
+including intermediate states before buffer compaction.
 
 ### Environment used for the reported timings
 
@@ -134,7 +137,7 @@ grouped by origin into technical, operational, and assumed, and the assumed ones
 covered by the sensitivity analysis.
 
 **Water area.** 2 × 1.5 km, split into 12 zones of 0.5 × 0.5 km. Zones Z1 and Z2 next to
-the terminal carry risk weight *w* = 3 and an admissible data age of 10 min; Z5, Z6 and
+the terminal carry risk weight *w* = 3 and a maximum allowable data age of 10 min; Z5, Z6 and
 the fairway zones Z10, Z11 carry *w* = 2 and 20 min; the rest carry *w* = 1 and 30 min.
 
 **Participants (15).** Control center CC and shore-based LoRaWAN gateways R1, R2 (wired to CC); buoys
@@ -151,6 +154,13 @@ two zones out. From 60 to 120 min link conditions are degraded (κ = 0.5). Worke
 W2 are evacuated from 65 min and return at 100 and 105 min.
 
 Time step δ = 5 min, horizon 180 min.
+
+## How to cite
+
+If you use this code or these results, please cite the related manuscript. Full
+bibliographic details will be added here once it is published. Until then, please cite
+the repository itself using the metadata in `CITATION.cff` (GitHub shows it under
+"Cite this repository"), including the release tag of the version you used.
 
 ## Licenses
 

@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "Freshness-Aware Port Observability: Model, Experiments and Figures"
+type: software
+authors:
+  - family-names: Hunko
+    given-names: Serhii
+    affiliation: "G.E. Pukhov Institute for Modelling in Energy Engineering of the NAS of Ukraine"
+  - family-names: Prymushko
+    given-names: Arsentii
+    orcid: "https://orcid.org/0000-0003-0270-0425"
+    affiliation: "G.E. Pukhov Institute for Modelling in Energy Engineering of the NAS of Ukraine"
+  - family-names: Puchko
+    given-names: Ivan
+    orcid: "https://orcid.org/0009-0002-9293-6764"
+    affiliation: "G.E. Pukhov Institute for Modelling in Energy Engineering of the NAS of Ukraine"
+  - family-names: Yaroshynskyi
+    given-names: Mykola
+    orcid: "https://orcid.org/0000-0001-6381-8588"
+    affiliation: "G.E. Pukhov Institute for Modelling in Energy Engineering of the NAS of Ukraine"
+  - family-names: Kravtsov
+    given-names: Hryhoriy
+    orcid: "https://orcid.org/0000-0003-1915-4897"
+    affiliation: "G.E. Pukhov Institute for Modelling in Energy Engineering of the NAS of Ukraine"
+  - family-names: Artemchuk
+    given-names: Volodymyr
+    orcid: "https://orcid.org/0000-0001-8819-4564"
+    affiliation: "G.E. Pukhov Institute for Modelling in Energy Engineering of the NAS of Ukraine"
+repository-code: "https://github.com/green-port-lab/freshness-aware-port-observability"
+license: MIT
+keywords:
+  - temporal graphs
+  - observability
+  - age of information
+  - environmental monitoring
+  - smart ports
+  - resilience
+abstract: >-
+  Model, computational experiments and figures for a freshness-aware
+  temporal-graph approach to the observability of a port water area.
