@@ -17,11 +17,10 @@ import itertools
 import math
 from collections import defaultdict
 
-DT = 5            # крок дискретизації, хв
-T_END = 180       # горизонт, хв
+DT = 5
+T_END = 180
 TIMES = list(range(0, T_END + 1, DT))
 
-# ---------- Акваторія ----------
 ZONES = {}
 for r in range(3):
     for c in range(4):
@@ -43,16 +42,12 @@ for k in (1, 2): W[k] = 3
 for k in (5, 6, 10, 11): W[k] = 2
 DMAX = {k: {3: 10, 2: 20, 1: 30}[W[k]] for k in ZONES}
 
-# ---------- Канали зв'язку: дальність (км), затримка (хв), напрям ----------
-# 'uplink' означає, що кінцевий пристрій може лише передавати до шлюзу
 CHANNELS = {
     "wired":  dict(rng=99.0, lat=0.10, sym=True),
     "radio":  dict(rng=None, lat=0.20, sym=True),
     "lora":   dict(rng=1.60, lat=1.00, sym=False),
 }
 
-# ---------- Типи учасників ----------
-# ch: канали; gw: чи є шлюзом LoRaWAN (може приймати uplink); r: дальність радіо
 TYPES = {
     "CC":      dict(ch={"radio"},         r=1.5, q=None, gw=False),
     "relay":   dict(ch={"radio", "lora"}, r=1.6, q=None, gw=True),
@@ -121,12 +116,10 @@ def edges_at(t, nodes):
             out.append((u, v, CHANNELS["wired"]["lat"]))
             continue
         d = math.dist(NODES[u]["pos"](t), NODES[v]["pos"](t))
-        # радіо: симетричний канал
         if "radio" in tu["ch"] and "radio" in tv["ch"]:
             if d <= min(tu["r"], tv["r"]) * kappa(t):
                 out.append((u, v, CHANNELS["radio"]["lat"]))
                 continue
-        # LoRaWAN: кінцевий пристрій -> шлюз, лише вгору
         if "lora" in tu["ch"] and "lora" in tv["ch"] and tv["gw"] and not tu["gw"]:
             if d <= CHANNELS["lora"]["rng"] * kappa(t):
                 out.append((u, v, CHANNELS["lora"]["lat"]))
@@ -210,7 +203,7 @@ def propagate(store, edges, budget, t):
     for src, buf in store.items():
         if not buf:
             continue
-        starts = defaultdict(list)          # момент відправлення -> ключі й tau
+        starts = defaultdict(list)
         for key, pairs in buf.items():
             for tau, av in pairs:
                 dep = max(av, t)
@@ -223,7 +216,7 @@ def propagate(store, edges, budget, t):
                 a, u = heapq.heappop(pq)
                 if a > arr.get(u, math.inf):
                     continue
-                if max(a, t) >= end:        # відправитися в цьому кроці вже не можна
+                if max(a, t) >= end:
                     continue
                 for v, w in adj[u]:
                     na = max(a, t) + w

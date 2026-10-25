@@ -48,7 +48,6 @@ def reset():
     FLAGS.update(jam=True, destroy=True)
     M.TYPES["worker"]["q"] = 0.5
 
-# ---------------- 1. Ablation ----------------
 def ablation():
     rows = []
     for cfg in CFGS:
@@ -63,7 +62,6 @@ def ablation():
            "temporal reachability, no freshness", "proposed (full)"], rows)
     return rows
 
-# ---------------- 2. Static-graph gap ----------------
 def static_gap():
     rows = []
     for cfg in CFGS:
@@ -81,7 +79,6 @@ def static_gap():
            "steps with overestimate", "max on start-up transient"], rows)
     return rows
 
-# ---------------- 3. Factorial ----------------
 def factorial():
     rows = []
     for cfg in CFGS:
@@ -104,7 +101,6 @@ def factorial():
            "both", "loss: node", "loss: link", "loss: both", "interaction"], rows)
     return rows
 
-# ---------------- 4. Sensitivity ----------------
 def sensitivity():
     rows = []
     def record(param, value):
@@ -132,7 +128,6 @@ def sensitivity():
           ["parameter", "value", "A", "B", "C", "C - A", "ordering A<=B<=C preserved"], rows)
     return rows
 
-# ---------------- 5. Scalability ----------------
 def synthetic(n_nodes, n_zones, seed=0):
     """Синтетична мережа: n_zones зон у сітці, n_nodes вузлів, один центр керування."""
     rnd = random.Random(seed)
@@ -197,7 +192,6 @@ def scalability():
     return rows
 
 
-# ---------------- 6. Розділення внесків свіжості та достовірності ----------------
 def components():
     from model2 import DMAX, ZONES, W, TYPES, NODES, active, edges_at, sensing_at, propagate, _add, _best, _prune
 
@@ -243,7 +237,6 @@ def components():
     return rows
 
 
-# ---------------- 7. Контрольний прогін без відмов ----------------
 def control_run():
     CRIT = [1, 2]
 
@@ -270,7 +263,6 @@ def control_run():
     return rows
 
 
-# ---------------- 8. Чутливість: змістовні показники ----------------
 def sensitivity_effects():
     CRIT = [1, 2]
 
@@ -308,7 +300,6 @@ def sensitivity_effects():
     return rows
 
 
-# ---------------- 9. Просторове огрублення положень працівників ----------------
 def quantization():
     orig = {n: M.NODES[n]["pos"] for n in M.NODES}
 
@@ -340,7 +331,6 @@ def quantization():
     return rows
 
 
-# ---------------- 10. Розмір буфера ----------------
 def buffer_size():
     from model2 import active, edges_at, sensing_at, propagate, _add, _prune, NODES
     reset()
@@ -373,7 +363,6 @@ def buffer_size():
     return maxP, maxD
 
 
-# ---------------- 11. Robustness of the headline results to the time step ----------------
 def robustness_time_step():
     """Головні показники при базовому кроці 5 хв і при кроці 1 хв (Appendix B)."""
     def avg(O, a, b):

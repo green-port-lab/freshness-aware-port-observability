@@ -16,8 +16,8 @@ Usage: python src/counterexample.py
 """
 DT, T_END = 5, 120
 TIMES = list(range(0, T_END + 1, DT))
-DMAX = 30          # допустимий вік даних, хв
-SWITCH = 60        # момент перемикання доступності каналів
+DMAX = 30
+SWITCH = 60
 
 def edges_at(t):
     """орієнтовані ребра знімка (u, v)"""
@@ -29,7 +29,7 @@ def sensing_at(t):
 
 def temporal():
     """запропонований підхід: store-carry-forward уздовж часово-узгоджених шляхів"""
-    buf = {n: None for n in "SRC"}        # момент найсвіжішого відомого вимірювання
+    buf = {n: None for n in "SRC"}
     out = {}
     for t in TIMES:
         for n in sensing_at(t):

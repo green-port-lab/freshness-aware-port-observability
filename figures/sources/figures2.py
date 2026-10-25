@@ -23,7 +23,6 @@ def load(name):
 def num(s):
     return float(str(s).replace(",", "."))
 
-# ---------------- чутливість ----------------
 rows = load("sensitivity_effects.csv")
 groups = {}
 for r in rows:
@@ -58,7 +57,6 @@ plt.tight_layout(w_pad=1.6, rect=[0, 0.07, 1, 1])
 plt.savefig(OUT + "/fig_sensitivity.png", dpi=600, bbox_inches="tight")
 plt.close()
 
-# ---------------- масштабованість ----------------
 sc = load("scalability.csv")
 n = [int(r["nodes"]) for r in sc]
 ms = [num(r["median ms/step"]) for r in sc]
@@ -79,7 +77,6 @@ plt.tight_layout()
 plt.savefig(OUT + "/fig_scalability.png", dpi=600, bbox_inches="tight")
 plt.close()
 
-# ---------------- ablation ----------------
 ab = load("ablation.csv")
 methods = [("snapshot connectivity", "instantaneous\nreachability"),
            ("static aggregated graph", "time-aggregated\nstatic graph"),
@@ -105,7 +102,6 @@ plt.tight_layout()
 plt.savefig(OUT + "/fig_ablation.png", dpi=600, bbox_inches="tight")
 plt.close()
 
-# ---------------- критичність ----------------
 import model2 as M
 from model2 import CONFIGS, mean, run
 base = mean(run("C")[0])

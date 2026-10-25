@@ -27,14 +27,13 @@ LABEL = {"CC": "Control center", "relay": "Shore-based LoRaWAN gateway", "sensor
          "worker": "Port worker (radio + UWB)"}
 
 def snapshot(ax, t, title):
-    # зони
     for k, ((x0, x1), (y0, y1)) in ZONES.items():
         fc = {3: "#dbe7f5", 2: "#e9f0f8", 1: "#f6f9fc"}[W[k]]
         ax.add_patch(Rectangle((x0, y0), .5, .5, fc=fc, ec="#9fb3c8", lw=.6))
         if k in SP and SP[k] <= t:
             ax.add_patch(Rectangle((x0, y0), .5, .5, fc="none", ec="#c0392b", hatch="////", lw=0, alpha=.45))
         ax.text(x0 + .04, y1 - .07, f"Z{k}", fontsize=7, color="#4a5b6e")
-    ax.add_patch(Rectangle((-.1, -.55), 2.2, .55, fc="#efe9df", ec="none"))   # берег
+    ax.add_patch(Rectangle((-.1, -.55), 2.2, .55, fc="#efe9df", ec="none"))
     ax.text(.3, -.5, "shore", fontsize=7, color="#7a6a55", ha="center")
     ax.add_patch(Rectangle((.8, -.52), .25, .14, fc="none", ec="#7a6a55", lw=.7, ls=":"))
     ax.text(.925, -.34, "assembly point", fontsize=6, color="#7a6a55", ha="center")
@@ -64,7 +63,7 @@ def snapshot(ax, t, title):
             continue
         x, y = NODES[n]["pos"](min(t, b - 1) if t >= b else t)
         if t >= b:
-            if n in ("R1", "S1"):   # вузли, що вийшли з ладу
+            if n in ("R1", "S1"):
                 ax.scatter([x], [y], marker="x", c="#c0392b", s=70, lw=2, zorder=5)
                 ax.text(x - .02, y - .13, n, fontsize=7, color="#c0392b", ha="right")
             continue
@@ -95,7 +94,6 @@ fig.legend(handles=handles, loc="lower center", ncol=6, fontsize=7.2, frameon=Fa
 plt.tight_layout(rect=(0, .1, 1, 1))
 plt.savefig(OUT + "/fig2_snapshots.png", dpi=600, bbox_inches="tight")
 
-# ---- Рис. 3: O(t) ----
 fig, ax = plt.subplots(figsize=(7.2, 3.3))
 ax.axvspan(60, 120, color="#f3d9d4", alpha=.6, lw=0)
 ax.axvline(60, color="#c0392b", lw=1)
