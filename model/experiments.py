@@ -40,7 +40,7 @@ def r(x, n=3):
 def write(name, header, rows):
     p = os.path.join(OUT, name)
     with open(p, "w", newline="", encoding="utf-8") as f:
-        w = csv.writer(f); w.writerow(header); w.writerows(rows)
+        w = csv.writer(f, lineterminator="\n"); w.writerow(header); w.writerows(rows)
     print("wrote", os.path.relpath(p))
 
 def reset():
