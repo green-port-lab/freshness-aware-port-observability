@@ -5,6 +5,7 @@ type: software
 authors:
   - family-names: Hunko
     given-names: Serhii
+    orcid: "https://orcid.org/0009-0008-1692-0828"
     affiliation: "G.E. Pukhov Institute for Modelling in Energy Engineering of the NAS of Ukraine"
   - family-names: Prymushko
     given-names: Arsentii
